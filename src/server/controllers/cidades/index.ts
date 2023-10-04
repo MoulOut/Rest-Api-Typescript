@@ -13,5 +13,3 @@ export const cidadesController = {
   ...updateById,
   ...deleteById,
 };
-
-cidadesController.create;
