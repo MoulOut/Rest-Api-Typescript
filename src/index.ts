@@ -8,7 +8,6 @@ const startServer = () => {
 };
 
 if (process.env.IS_LOCALHOST !== 'true') {
-  Knex.migrate.latest();
   startServer();
 } else {
   startServer();
