@@ -10,7 +10,7 @@ export async function up(knex: Knex) {
       table.comment('Tabela usada para armazenar cidades do sistema');
     })
     .then(() => {
-      console.log(`# Dreated table ${ETableNames.cidade}`);
+      console.log(`# Created table ${ETableNames.cidade}`);
     });
 }
 
