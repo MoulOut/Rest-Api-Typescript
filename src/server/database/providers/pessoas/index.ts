@@ -6,10 +6,10 @@ import * as count from './Count';
 import * as create from './Create';
 
 export const PessoasProvider = {
-  getById,
-  deleteById,
-  updateById,
-  getAll,
-  count,
-  create
+  ...getById,
+  ...deleteById,
+  ...updateById,
+  ...getAll,
+  ...count,
+  ...create
 };

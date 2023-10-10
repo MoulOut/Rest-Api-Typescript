@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import * as yup from 'yup';
 import { validation } from '../../shared/middleware';
-import { CidadesProvider } from '../../database/providers/cidades';
+import yup from 'yup';
+import { StatusCodes } from 'http-status-codes';
+import { PessoasProvider } from '../../database/providers/pessoas';
 
 interface ParamProps {
   id?: number;
@@ -20,11 +20,12 @@ export const deleteById = async (req: Request<ParamProps>, res: Response) => {
   if (!req.params.id) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
-        default: 'O parametro "id" precisa ser informado.',
+        default: 'O Parametro "id" precisa ser informado.',
       },
     });
   }
-  const result = await CidadesProvider.deleteById(req.params.id);
+
+  const result = PessoasProvider.deleteById(req.params.id);
 
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
