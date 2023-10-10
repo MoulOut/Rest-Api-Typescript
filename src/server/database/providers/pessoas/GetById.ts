@@ -1,10 +1,10 @@
 import { ETableNames } from '../../ETableNames';
 import { Knex } from '../../knex';
-import { Cidade } from '../../models';
+import { Pessoa } from '../../models';
 
-export const getById = async (id: number): Promise<Cidade | Error> => {
+export const getById = async (id: number): Promise<Pessoa | Error> => {
   try {
-    const result = await Knex(ETableNames.cidade)
+    const result = await Knex(ETableNames.pessoa)
       .select('*')
       .where('id', '=', id)
       .first();
@@ -14,6 +14,6 @@ export const getById = async (id: number): Promise<Cidade | Error> => {
     return new Error('Registro não encontrado');
   } catch (error) {
     console.log(error);
-    return new Error('Erro ao consultar o registro');
+    return new Error('Erro ao consultar Registro.');
   }
 };
