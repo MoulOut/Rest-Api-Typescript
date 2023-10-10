@@ -6,7 +6,7 @@ import * as updateById from './UpdateById';
 
 
 
-export const cidadesController = {
+export const CidadesController = {
   ...create,
   ...getAll,
   ...getById,
