@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validation } from '../../shared/middleware';
-import yup from 'yup';
+import * as yup from 'yup';
 import { StatusCodes } from 'http-status-codes';
 import { PessoasProvider } from '../../database/providers/pessoas';
 
@@ -8,8 +8,8 @@ interface ParamProps {
   id?: number;
 }
 
-export const getByIdValidation = validation((getSchema) => ({
-  params: getSchema<ParamProps>(
+export const getByIdValidation = validation((get) => ({
+  params: get<ParamProps>(
     yup.object().shape({
       id: yup.number().integer().required().moreThan(0),
     })

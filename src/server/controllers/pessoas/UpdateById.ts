@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Pessoa } from '../../database/models';
 import { validation } from '../../shared/middleware';
-import yup from 'yup';
+import * as yup from 'yup';
 import { PessoasProvider } from '../../database/providers/pessoas';
 import { StatusCodes } from 'http-status-codes';
 
@@ -11,13 +11,13 @@ interface ParamProps {
 
 interface BodyProps extends Omit<Pessoa, 'id'> {}
 
-export const updateByIdValidation = validation((getSchema) => ({
-  params: getSchema<ParamProps>(
+export const updateByIdValidation = validation((get) => ({
+  params: get<ParamProps>(
     yup.object().shape({
       id: yup.number().integer().required().moreThan(0),
     })
   ),
-  body: getSchema<BodyProps>(
+  body: get<BodyProps>(
     yup.object().shape({
       email: yup.string().required().email(),
       nomeCompleto: yup.string().required().min(3),

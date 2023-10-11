@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validation } from '../../shared/middleware';
-import yup from 'yup';
+import * as yup from 'yup';
 import { PessoasProvider } from '../../database/providers/pessoas';
 import { StatusCodes } from 'http-status-codes';
 
@@ -10,8 +10,8 @@ interface QueryProps {
   filter?: string;
 }
 
-export const getAllValidation = validation((getSchema) => ({
-  query: getSchema<QueryProps>(
+export const getAllValidation = validation((get) => ({
+  query: get<QueryProps>(
     yup.object().shape({
       page: yup.number().integer().optional().moreThan(0).default(1),
       limit: yup.number().integer().optional().moreThan(0).default(7),
@@ -24,7 +24,7 @@ export const getAll = async (
   req: Request<{}, {}, {}, QueryProps>,
   res: Response
 ) => {
-  const result = PessoasProvider.getAll(
+  const result = await PessoasProvider.getAll(
     req.query.page || 1,
     req.query.limit || 7,
     req.query.filter || ''

@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
 import { Pessoa } from '../../database/models';
 import { validation } from '../../shared/middleware';
-import yup from 'yup';
+import * as yup from 'yup';
 import { StatusCodes } from 'http-status-codes';
 import { PessoasProvider } from '../../database/providers/pessoas';
 
 interface BodyProps extends Omit<Pessoa, 'id'> {}
 
-export const createValidation = validation((getSchema) => ({
-  body: getSchema<BodyProps>(
+export const createValidation = validation((get) => ({
+  body: get<BodyProps>(
     yup.object().shape({
       email: yup.string().required().email(),
       nomeCompleto: yup.string().required().min(3),
