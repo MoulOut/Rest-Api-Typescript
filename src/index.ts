@@ -8,7 +8,14 @@ const startServer = () => {
 };
 
 if (process.env.IS_LOCALHOST !== 'true') {
-  startServer();
+  console.log('Rodando migrations');
+
+  Knex.migrate.latest().then(() => {
+    Knex.seed
+      .run()
+      .then(() => startServer())
+      .catch(console.log);
+  });
 } else {
   startServer();
 }

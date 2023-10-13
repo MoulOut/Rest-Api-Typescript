@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { testServer } from '../jest.setup';
 
 describe('pessoas - UpdateById', () => {
-  it('deveria retornar 201 e atualizar o registro', async () => {
+  it('deveria retornar 204 e atualizar o registro', async () => {
     const res1 = await testServer.post('/pessoas').send({
       nomeCompleto: 'Matheus Moulin',
       cidadeId: 1,
