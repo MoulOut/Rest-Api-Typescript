@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { Usuario } from '../../database/models';
 import { validation } from '../../shared/middleware';
 import { UsuariosProvider } from '../../database/providers/usuarios/Index';
+import { PasswordCrypto } from '../../shared/services';
 
 export interface BodyProps extends Omit<Usuario, 'nome' | 'id'> {}
 
@@ -30,7 +31,12 @@ export const signIn = async (
     });
   }
 
-  if (req.body.senha !== result.senha) {
+  const verifyPass = await PasswordCrypto.verifyPassword(
+    req.body.senha,
+    result.senha
+  );
+
+  if (!verifyPass) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: 'Email ou Senha invalidos',
