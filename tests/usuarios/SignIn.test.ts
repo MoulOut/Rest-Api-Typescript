@@ -38,4 +38,5 @@ describe('usuarios - SignIn', () => {
     expect(res2.statusCode).toEqual(StatusCodes.UNAUTHORIZED);
     expect(res2.body).toHaveProperty('errors.default');
   });
+  
 });
