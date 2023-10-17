@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "yarn ts-node-dev ./src/index.ts",
+    "start": "ts-node-dev ./src/index.ts",
     "build": "node ./build/index.js",
     "postinstall": "tsc",
     "knex:rollback-all": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback --all",
