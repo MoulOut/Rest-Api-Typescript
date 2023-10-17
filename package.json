@@ -9,7 +9,7 @@
   "scripts": {
     "start": "ts-node-dev ./src/index.ts",
     "build": "node ./build/index.js",
-    "postinstall": "tsc",
+    "prebuild": "tsc",
     "knex:rollback-all": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback --all",
     "knex:rollback": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback",
     "knex:migrate": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:latest",
