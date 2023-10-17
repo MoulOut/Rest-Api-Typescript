@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { Usuario } from '../../database/models';
 import { validation } from '../../shared/middleware';
 import { UsuariosProvider } from '../../database/providers/usuarios/Index';
-import { PasswordCrypto } from '../../shared/services';
+import { JWTService, PasswordCrypto } from '../../shared/services';
 
 export interface BodyProps extends Omit<Usuario, 'nome' | 'id'> {}
 
@@ -21,9 +21,9 @@ export const signIn = async (
   req: Request<{}, {}, BodyProps>,
   res: Response
 ) => {
-  const result = await UsuariosProvider.getByEmail(req.body.email);
+  const user = await UsuariosProvider.getByEmail(req.body.email);
 
-  if (result instanceof Error) {
+  if (user instanceof Error) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: 'Email ou Senha invalidos',
@@ -33,7 +33,7 @@ export const signIn = async (
 
   const verifyPass = await PasswordCrypto.verifyPassword(
     req.body.senha,
-    result.senha
+    user.senha
   );
 
   if (!verifyPass) {
@@ -43,6 +43,16 @@ export const signIn = async (
       },
     });
   } else {
-    return res.status(StatusCodes.OK).json({ acessToken: 'tokenteste' });
+    const acessToken = JWTService.sign({ uid: user.id });
+
+    if (acessToken === 'JWT_SECRET_NOT_FOUND') {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors: {
+          default: 'Erro ao gerar o token de acesso.',
+        },
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({ acessToken });
   }
 };
